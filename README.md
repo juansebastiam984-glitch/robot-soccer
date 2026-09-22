@@ -1,4 +1,4 @@
-# El Linux / Oguri-Cap - Robot de Fútbol RC
+# Robot de Fútbol RC
 
 Robot de fútbol robótico (15x15cm) para RoboMatrix Santo Domingo 2026, categoría RoboFut.
 
@@ -10,6 +10,47 @@ Robot de fútbol robótico (15x15cm) para RoboMatrix Santo Domingo 2026, categor
 - Giroscopio/acelerómetro MPU6050
 - Batería LiPo 2S (7.4V)
 - Buck converter LM2596 (7.4V para motores) + regulación separada de 5V para lógica
+
+## Conexiones
+
+### Alimentación
+
+| Desde | Hacia |
+|---|---|
+| LiPo 2S (7.4V) | VM del TB6612 (motores, directo, sin regular) |
+| ESP32 (pin 5V) | VCC del TB6612 (lógica) |
+| GND (LiPo, LM2596, TB6612, ESP32, MPU6050) | **Todos unidos en un mismo punto de tierra común** |
+
+### TB6612FNG ↔ ESP32 (motores)
+
+| Pin TB6612 | GPIO ESP32 |
+|---|---|
+| STBY | 13 |
+| AIN1 | 27 |
+| AIN2 | 26 |
+| PWMA | 14 |
+| BIN1 | 25 |
+| BIN2 | 33 |
+| PWMB | 32 |
+| AO1 / AO2 | Terminales motor A (izquierdo) |
+| BO1 / BO2 | Terminales motor B (derecho) |
+
+### MPU6050 ↔ ESP32 (I2C)
+
+| Pin MPU6050 | Conecta a |
+|---|---|
+| VCC | 3.3V del ESP32 (no 5V) |
+| GND | GND común |
+| SCL | GPIO 22 |
+| SDA | GPIO 21 |
+
+### Recomendaciones físicas
+
+- Capacitor **electrolítico 100-470µF** entre VM y GND, lo más cerca posible del TB6612 — reduce caídas de voltaje al arrancar motores.
+- Capacitores **cerámicos 100nF** en las terminales de cada motor — reducen ruido eléctrico.
+- Mantener los cables de SDA/SCL alejados o cruzados en ángulo recto (no paralelos) respecto a los cables de motores, para evitar interferencia en las lecturas del MPU6050.
+- Usar cable más grueso (no jumpers finos) para las conexiones de GND y VM que llevan la corriente de los motores — un jumper delgado puede generar suficiente resistencia para causar reinicios del ESP32 a máxima potencia.
+- Evitar que cables pasen sobre la zona de la antena del ESP32, ya que reduce el alcance Bluetooth.
 
 ## App de control
 

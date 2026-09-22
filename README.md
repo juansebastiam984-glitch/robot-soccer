@@ -84,4 +84,4 @@ Si necesitas conectar un celular distinto sin saber el código, escribe `escaneo
 ## Notas de calibración
 
 - `factorMotorA` / `factorMotorB` en el código compensan que un motor gire más rápido que el otro — ajustar según pruebas físicas.
-- La velocidad máxima real está limitada a PWM 180 (no 255) para evitar picos de corriente que puedan reiniciar el ESP32.
+- El PWM máximo real (255 = 100%) puede necesitar limitarse según la capacidad de corriente de tu fuente/buck converter — si notas reinicios del ESP32 a velocidades altas, reduce el límite superior en la línea `map(valorSlider, 0, 100, 0, 255)` del código.

@@ -176,7 +176,7 @@ class MyCallbacks: public BLECharacteristicCallbacks {
           String numeroTexto = value.substring(pos + 1);
           int valorSlider = numeroTexto.toInt();
           // Se limita el PWM real a 180 (no 255) para no exigir demasiada corriente de golpe
-          velocidadBase = map(valorSlider, 0, 100, 0, 180);
+          velocidadBase = map(valorSlider, 0, 100, 0, 255);
           Serial.print("Velocidad base actualizada: ");
           Serial.println(velocidadBase);
         }
